@@ -1,0 +1,9 @@
+{
+    "database" : "inferno",
+    "provider" : "mongodb",
+    "driver" : null,
+    "hostname" :"localhost",
+    "port" : 27017,
+    "username":"infernoAdmin",
+    "password":"admin123"
+}
