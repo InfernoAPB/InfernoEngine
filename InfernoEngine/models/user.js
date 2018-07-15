@@ -1,19 +1,41 @@
 var mongoose = require('mongoose');
+var database = require('../utils/database');
+
+var UserCollection = {
+    collection: 'user'
+};
 
 var UserSchema = mongoose.Schema(
     {
-        name: String,
-        device: String,
-        email: String,
-        password: String,
+        name:String,
+        email:String,
+        password:String,
+        sub_id:String,
+        login_method:String
     },
-    {
-        collection: 'user'
-    });
+    UserCollection
+);
 
-var UserModel = mongoose.model('user', UserSchema);
+var UserModel = mongoose.model('user',UserSchema);
+
+function findUser(keys,callback)
+{
+    database.findResults(keys,UserModel,function(err,users){
+        callback(err,users);
+    });
+}
+
+function createUser(values,callback)
+{
+    database.insertRecord(values,UserModel,function(err,record){
+        callback(err,record);
+    });
+}
 
 module.exports = {
     UserSchema,
-    UserModel
+    UserCollection,
+    UserModel,
+    findUser,
+    createUser
 };

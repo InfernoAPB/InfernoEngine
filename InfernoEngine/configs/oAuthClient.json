@@ -1,0 +1,16 @@
+{
+    "web": {
+        "client_id": "226886959389-fdkvepgpnsdtmkeno01sqa6dhv4smgde.apps.googleusercontent.com",
+        "project_id": "infernoengine-209504",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://accounts.google.com/o/oauth2/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_secret": "OWsjORkL1mvbvWHZGzgqYcHv",
+        "redirect_uris": [
+            "https://localhost:8443/outh2callback"
+        ],
+        "javascript_origins": [
+            "https://localhost:8443"
+        ]
+    }
+}

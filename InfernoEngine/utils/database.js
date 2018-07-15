@@ -22,10 +22,36 @@ function mongoInit() {
     return mongoConnection;
 }
 
+
+// All utility functions
+function findResults(keys,model,callback)
+{
+    model.find(keys,function (err,results){
+        if(err)
+         throw(err);
+        callback(err,results);
+    });
+}
+
+function insertRecord(values,recordModel,callback)
+{
+    var record = new recordModel(values);
+    record.save(function (err, record) {
+        if (err) {
+          callback(err,null);
+        }else{
+            callback(err,record);
+          }
+    });
+}
+
+
 module.exports =
     {
         mongoInit,
         mongoConnection,
         db,
-        url
+        url,
+        findResults,
+        insertRecord
     };

@@ -8,41 +8,32 @@
     <meta name="google-signin-client_id" content="226886959389-fdkvepgpnsdtmkeno01sqa6dhv4smgde.apps.googleusercontent.com">
     <link rel="icon" href="../../../../favicon.ico">
     <title>Signin Template for Bootstrap</title>
-    <!-- Bootstrap core CSS -->
     <link href="bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
     <link href="signin.css" rel="stylesheet">
     <script>
-    function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-      } 
     </script>
   </head> 
-
   <body class="text-center">
-    <form class="form-signin" action="/signin"method="post">
-      <img class="mb-4" src="https://getbootstrap.com/docs/4.1/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+    <form class="form-signin" id="login_form"action="/login" method="post">
+      <img class="mb-4" src="https://getbootstrap.com/docs/4.1/assets/brand/bootstrap-solid.svg" alt="" width="72" height="100">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-      <%if(!userFound) {%>
-        <p class="h5 font-weight-bold red">Invalid username or password!</p>
-      <%}%>
       <label for="inputEmail" class="sr-only">Email address</label>
       <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <input id="signin_type" name="signin_type" type="hidden" value="signin_username">
       <div class="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me"> Remember me
         </label>
       </div>
-      <button class="btn btn-md btn-primary" type="submit">Sign in</button>
-      <a class="btn btn-md btn-link" href="http://127.0.0.1:10000/signup" role="button">Sign up</a>
-      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      <!-- <button class="btn btn-md btn-primary btn-block" type="submit">Sign in</button> -->
+      <button class="btn btn-md btn-primary btn-block" type="button" onClick="onSignInClicked();">Sign in</button>
+      <a class="btn btn-md btn-success btn-block" type="button" href="http://localhost:10000/signup" role="button">Sign up</a>
+      <button class="btn btn-md btn-secondary btn-block" type="button" onClick="onGoogleSignInClicked();">Google Sign-In</button>
     </form>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=appStart" async defer></script>
+    <script src="auth-listener.js"></script>
   </body>
 </html>
+ 

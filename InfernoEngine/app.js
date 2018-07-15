@@ -1,121 +1,238 @@
 var express = require('express');
+var session = require('express-session');
 var ejs = require('ejs');
 var fs = require('fs');
-var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var https = require('https');
 var http = require('http');
-var database = require('./utils/database');
-var userModule = require('./models/user');
+
+//=========================================
+// ALL USER MODULES/CERTIFICATES HERE
+//=========================================
 
 var key = fs.readFileSync('encryption/server.key');
-var cert = fs.readFileSync( 'encryption/server.pem' );
+var cert = fs.readFileSync('encryption/server.pem');
+var controllers = require('./controllers/controllers');
+var userModule = require('./models/user');
 
-var httpsPort = 8443;
-var options = { 
-    key : key,
-    cert : cert,
-    passphrase: 'admin'
-};
+//=========================================
+// APP GLOBALS
+//=========================================
+
 var app = express();
 var router = express.Router();
-app.use(express.static("styles"));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.set('view engine', 'ejs');
 
-app.use(function(req,res,next)
-{
-    if(req.secure)
-    {
+//=========================================
+// ALL CONFIGS GO HERE
+//=========================================
+
+var sessionConfig = (session({
+    secret: "my-secret",
+    resave: false,
+    saveUninitialized: true,
+    //cookie:{secure:true}
+}))
+
+var options = {
+    key: key,
+    cert: cert,
+    passphrase: 'admin'
+};
+
+//=========================================
+// ALL USE STATEMENTS HERE
+//=========================================
+app.use(express.static("styles"));
+app.use(express.static("modules"));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(sessionConfig);
+app.use(function (req, res, next) {
+    if (req.secure) {
         return next();
     };
-    
-    res.redirect('https://' + req.hostname +":"+ httpsPort + req.url);
+    res.redirect('https://' + req.hostname + ":" + httpsPort + req.url);
 });
 
+//=========================================
+// ALL SET STATEMENTS HERE
+//=========================================
+app.set('view engine', 'ejs');
+
+//=========================================
+// GLOBAL VARIABLES
+//=========================================
+
+var sess;
+var httpsPort = 8443;
+//=========================================
+// ROUTES
+//=========================================
+
 app.get("/", function (req, res) {
-    var tabName = req.params.tab;
-    res.render("home",{tab:tabName});
+    console.log(req);
+    sess = req.session;
+    if (sess.name) {
+        res.redirect(`${sess.name}/dashboard`);
+    }
+    else {
+        var tabName = req.params.tab;
+        res.render("home", { tab: tabName });
+    }
 });
 
 app.get("/login", function (req, res) {
-    res.render("login", { userFound: true });
+    sess = req.session;
+    if (sess.name) {
+        res.redirect(`${sess.name}/dashboard`);
+    }
+    else {
+        res.render("login");
+    }
 });
 
-app.get("/outh2callback", function (req, res) {
-    res.send("OAuth 2 call back is successful");
+app.post("/login", function (req, res) {
+    console.log(req);
+    sess = req.session;
+
+    if (sess.name) {
+        res.redirect(`${sess.name}/dashboard`);
+    }
+    else {
+        controllers.userAuthenticationController.processRequest(req, function (err, user, token) {
+            if (err) {
+                throw (err);
+            }
+            else if (user) {
+                sess.email = user.email;
+                sess.name = user.name;
+                res.send({
+                    user_found: true,
+                    name: user.name,
+                    signin_type: req.body.signin_type,
+                    session_id: sess.id
+                });
+            }
+            else {
+                if (token && token.verified) {
+                    controllers.createUserController.createUser({
+                        name: token.payload["name"],
+                        email: token.payload["email"],
+                        password: null,
+                        sub_id: token.payload["sub_id"],
+                        login_method: "signin_google"
+                    },
+                        function (err, user) {
+                            if (err) {
+                                throw (err);
+                            }
+                            else {
+                                if (user) {
+                                    sess.email = user.email;
+                                    sess.name = user.name;
+                                    res.send({
+                                        user_found: true,
+                                        name: user.name,
+                                        signin_type: req.body.signin_type,
+                                        session_id: sess.id
+                                    });
+                                }
+                                else {
+                                    res.send("Problem happened while login in using google account")
+                                }
+                            }
+                        });
+                }
+                else {
+                    res.send({
+                        user_found: false,
+                        name: "",
+                        signin_type: req.body.signin_type,
+                        session_id: null
+                    });
+                }
+            }
+        });
+    }
+});
+
+app.get("/:name/dashboard", function (req, res) {
+    console.log(req);
+    sess = req.session;
+    var name = req.params.name;
+    if (sess.name) {
+        if(sess.name === name)
+            res.render("dashboard", { user: sess.name });
+        else
+            res.redirect("/");
+    }
+    else {
+        res.redirect("/login");
+    }
 });
 
 app.get("/signup", function (req, res) {
-    res.render("signup", { userEmail : "",userFound: false, passwordMatch : true});
-});
-
-app.get("/dashboard", function (req, res) {
-    res.render("signup", { userEmail : "",userFound: false, passwordMatch : true});
-});
-
-app.post("/signin", function (req, res) {
-    var email = req.body.email;
-    var password = req.body.password;
-    var found = false;
-    userModule.UserModel.find({email:email,password:password},function (error, userAccounts) {
-        var userAccount = null;
-        if(userAccounts && userAccounts.length > 0)
-        {
-            found = true;
-            userAccount = userAccounts[0];
-        }
-        if (!found) {
-            res.render("login", { userFound: found });
-        }
-        else {
-            res.redirect("dashboard", { user: userAccount.name });
-        }
-     });
-});
-
-app.post("/createUser", function (req, res) {
-    var email = req.body.email;
-    var password = req.body.password;
-    var name = req.body.name;
-    var confirmPassword = req.body.confirmPassword;
-    var found = false;
-    var passwordDontMatch = false;
-
-    if(confirmPassword !== password)
-    {
-        res.render("signup", { userFound : false, userEmail:"",passwordMatch : false });
-        return;
+    console.log(req);
+    sess = req.session;
+    if (sess.name) {
+        res.redirect(`${sess.name}/dashboard`);
     }
+    else {
+        res.render("signup");
+    }
+});
 
-    userModule.UserModel.find({email:email},function (error, userAccounts) {
-        var userAccount = null;
-        if(userAccounts && userAccounts.length > 0)
-        {
-            found = true;
-            userAccount = userAccounts[0];
-        }
-        if (!found) 
-        {
-             var user = new userModule.UserModel({name : name, email : email,password : password,device:"affkahjdfo8jaoidupejfkjoija"});
-             user.save(function (err,user){
-                 if(err) return console.error(err);
-                 console.log(user);
-                 res.render("login",{userFound : true});
-             });
+app.post("/signup", function (req, res) {
+    controllers.createUserController.processRequest(req, function (err, user) {
+        if (err) {
+            throw (err);
+            res.send({
+                user_found: false,
+                status: "user_failed",
+                message: "Something went wrong while creating user"
+            });
         }
         else {
-            res.render("signup", { userFound : found, userEmail: userAccount.email,passwordMatch : true });
+            if (user) {
+                res.send({
+                    user_found: true,
+                    status: "user_exist",
+                    message: `User Account with ${req.body.email} already exists`
+                });
+            }
+            else {
+                res.send({
+                    user_found: false,
+                    status: "user_created",
+                    message: "User account created successfully"
+                });
+            }
         }
-     });
+    });
 });
 
-http.createServer(app).listen(10000,function () {
-         console.log("Created HTTP server to listen on Port 10000");
+app.get("/logout", function (req, res) {
+    sess = req.session;
+    if (sess.name) {
+        sess.name = null;
+        res.redirect("/");
+    }
 });
 
-https.createServer(options,app).listen(httpsPort,function () {
-    console.log("Created HTTPS server to listen on Port 443");
+app.get("/somthingwentwrong", function (req, res) {
+    res.send("There is somthing went wrong while processing request");
+});
+
+//=========================================
+// CREATING SERVER
+//=========================================
+
+http.createServer(app).listen(10000, function () {
+    console.log("Created HTTP server to listen on Port 10000");
+});
+
+https.createServer(options, app).listen(httpsPort, function () {
+    console.log("Created HTTPS server to listen on Port 8443");
 });
 
 

@@ -7,26 +7,14 @@
      <meta name="description" content="">
      <meta name="author" content="">
      <link rel="icon" href="../../../../favicon.ico">
- 
      <title>Signin Template for Bootstrap</title>
- 
-     <!-- Bootstrap core CSS -->
      <link href="bootstrap.min.css" rel="stylesheet">
-     <!-- Custom styles for this template -->
      <link href="signin.css" rel="stylesheet">
    </head>
- 
    <body class="text-center">
-     <form class="form-signin" action="/createUser" method="post">
+     <form class="form-signin" id="signup_form" action="/signup" method="post">
        <img class="mb-4" src="https://getbootstrap.com/docs/4.1/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
        <h1 class="h3 mb-3 font-weight-normal">Sign Up!</h1>
-       <%if(userFound) {%>
-       <div class="alert alert-info" role="alert">
-            User with <%=userEmail%> address already exists.please go to <a href="http://localhost:10000/login" class="alert-link">login</a> page.
-       </div>
-       <%} else if(!passwordMatch){%>
-         <p class="h5 font-weight-bold red">Password dont match</p>
-       <%}%>
        <label for="inputName" class="sr-only">Name</label>
        <input type="text" name="name" id="inputName" class="form-control" placeholder="Name" required autofocus>
        <label for="inputEmail" class="sr-only">Email address</label>
@@ -35,8 +23,63 @@
        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
        <label for="confirmPassword" class="sr-only">Password</label>
        <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" placeholder="Confirm Password" required>
-       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+       <button class="btn btn-lg btn-primary btn-block" type="button" onClick="onSignupClicked();">Sign Up</button>
      </form>
+     <script>
+      function onSignupClicked()
+      { 
+      var signupForm = document.getElementById("signup_form");
+      var nameElement = document.getElementById("inputName");
+      var email = document.getElementById("inputEmail");
+      var password = document.getElementById("inputPassword");
+      var confirmPassword = document.getElementById("confirmPassword");
+      var passwordsNotMatching = document.createElement("div");
+      passwordsNotMatching.setAttribute("id","pwdnomatch");
+      passwordsNotMatching.setAttribute("class", "alert alert-warning");
+      passwordsNotMatching.setAttribute("role", "alert");
+      passwordsNotMatching.innerText = `Passwords are not matching`;
+
+      var emailExists = document.createElement("div");
+      emailExists.setAttribute("class", "alert alert-primary");
+      emailExists.setAttribute("role", "alert");
+      emailExists.innerHTML = `Email is already in use. Please go to <a href="/login" class="alert-link">login</a> page.`;
+         if(password.value != confirmPassword.value)
+         {
+             signupForm.insertBefore(passwordsNotMatching,nameElement);
+         }
+         else
+         {
+           var name = nameElement.value;
+           var email = email.value;
+           var password = password.value;
+           var confirmPassword = confirmPassword.value;
+           
+          var xhttp = new XMLHttpRequest();
+          xhttp.open("POST", "/signup", true);
+          xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          var values = `name=${name}&email=${email}&password=${password}&confirmPassword=${confirmPassword}`;
+          xhttp.onreadystatechange = function () {
+              console.log(this.responseText);
+              if (this.readyState == 4 && this.status == 200) {
+                  var response = JSON.parse(this.responseText);
+                  if (!response.user_found && response.status === "user_created") {
+                    window.location.href = "/login";
+                  }
+                  else {
+                      if(response.user_found)
+                      {
+                        var child = document.getElementById("pwdnomatch");
+                          if(child)
+                            child.parentNode.removeChild(child);
+                          signupForm.insertBefore(emailExists,nameElement);
+                      }
+                  }
+              }
+            }
+          xhttp.send(values);
+         }
+      }
+     </script>
    </body>
  </html>
  
