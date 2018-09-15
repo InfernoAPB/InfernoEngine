@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package com.inferno.protos;
+
+option java_outer_classname = "InAppPuchaseProtos";
+
+message InAppPurchase
+{
+  string id = 1;
+  string receipt = 2; 
+}
+
+message InAppPurchaseResponse
+{
+    string id = 1;
+    bool status = 2;
+    string message = 3;
+    bytes payload = 4;
+}

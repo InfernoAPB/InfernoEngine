@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var database = require('../utils/database');
 
 var UserCollection = {
-    collection: 'user'
+    collection: 'game_admins'
 };
 
 var UserSchema = mongoose.Schema(

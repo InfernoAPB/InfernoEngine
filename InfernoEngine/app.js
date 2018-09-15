@@ -14,6 +14,8 @@ var key = fs.readFileSync('encryption/server.key');
 var cert = fs.readFileSync('encryption/server.pem');
 var controllers = require('./controllers/controllers');
 var userModule = require('./models/user');
+var game_server = require('./game/game-server');
+
 
 //=========================================
 // APP GLOBALS

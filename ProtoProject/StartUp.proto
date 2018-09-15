@@ -1,0 +1,51 @@
+
+syntax = "proto3";
+
+import "SharedEnums.proto";
+
+package com.inferno.protos;
+
+option java_outer_classname = "StartupProtos";
+
+
+message VersionProto
+{
+    int32 majorNumber = 1;
+    int32 minorNumber = 2;
+    int32 patchNumber = 3;
+}
+
+message StartUp
+{
+    string udid = 1;
+    string fbid = 2;
+    string platform = 3;
+    VersionProto version = 4;
+    string staticDataHash = 5;
+}
+
+message StartUpResponse
+{
+    enum StartupResponseStatus
+    {
+        STARTUP_STATUS_NONE = 0;
+        MAJOR_UPDATE = 1;
+        MINOR_UPDATE = 2;
+        NO_UPDATE = 3;
+        SUCCESS = 4;
+        FAIL = 5;
+    }
+
+    enum PlayerStatus
+    {
+        PLAYER_STATUS_NONE = 0;
+        PLAYER_NOT_FOUND = 1;
+        PLAYER_FOUND = 2;
+        PLAYER_BANNED = 3;
+    }
+
+    string id = 1;
+    StartupResponseStatus startupStatus = 2;
+    PlayerStatus playerStatus = 3;
+    string message = 4;
+}

@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+message Chest
+{
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string image = 4;
+    repeated Reward rewards = 5; 
+}
+
+message Card
+{
+
+}
+
+message Reward
+{
+
+}
+
+message Data
+{
+    repeated Chest chests = 1;
+    repeated Card cards = 2;
+    repeated Reward rewards = 3;
+}
