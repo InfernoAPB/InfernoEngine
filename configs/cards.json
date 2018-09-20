@@ -1,0 +1,121 @@
+{
+    "cards":[
+        {
+            "id" : "IGCA-001",
+            "properties": [
+                {
+                    "name" : "damage",
+                    "value" : 49
+                },
+                {
+                    "name" : "hitpoints",
+                    "value" : 145
+                },                
+                {
+                    "name" : "targets",
+                    "value" : ["Air","Ground"]
+                },
+                {
+                    "name" : "range",
+                    "value" : 5
+                },
+                {
+                    "name" : "speed",
+                    "value" : "Medium"
+                },
+                {
+                    "name" : "hitspeed",
+                    "value" : 1.2
+                },
+                {
+                    "name" : "rarity",
+                    "value" : "common"
+                },
+                {
+                    "name" : "type",
+                    "value" : "troop"
+                }
+            ],
+            "image":"archer",
+            "description":"A pair of lightly armoured ranged attackers"
+        },
+        {
+            "id" : "IGCA-002",
+            "properties": [
+                {
+                    "name" : "damage",
+                    "value" : 110
+                },
+                {
+                    "name" : "hitpoints",
+                    "value" : 374
+                },                
+                {
+                    "name" : "targets",
+                    "value" : ["Air","Ground"]
+                },
+                {
+                    "name" : "range",
+                    "value" : 6
+                },
+                {
+                    "name" : "speed",
+                    "value" : "Medium"
+                },
+                {
+                    "name" : "hitspeed",
+                    "value" : 1.2
+                },
+                {
+                    "name" : "rarity",
+                    "value" : "common"
+                },
+                {
+                    "name" : "type",
+                    "value" : "troop"
+                }
+            ],
+            "image":"musketeer",
+            "description":"Dont be fooled by her delecately coiffed hair"
+        },
+        {
+            "id" : "IGCA-003",
+            "properties": [
+                {
+                    "name" : "damage",
+                    "value" : 132
+                },
+                {
+                    "name" : "hitpoints",
+                    "value" : 2090
+                },                
+                {
+                    "name" : "targets",
+                    "value" : ["Buildings"]
+                },
+                {
+                    "name" : "range",
+                    "value" : "Melee"
+                },
+                {
+                    "name" : "speed",
+                    "value" : "Slow"
+                },
+                {
+                    "name" : "hitspeed",
+                    "value" : 1.5
+                },
+                {
+                    "name" : "rarity",
+                    "value" : "Rare"
+                },
+                {
+                    "name" : "type",
+                    "value" : "troop"
+                }
+            ],
+            "image":"gaint",
+            "description":"Slow but durable. only attacks buildings. the real one man wrecking crew."
+        }
+    ]
+}

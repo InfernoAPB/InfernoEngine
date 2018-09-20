@@ -1,0 +1,58 @@
+{
+    "gameelements":[
+        {
+            "id" : "IGCH-001",
+            "currency" : [
+                {
+                    "type"  : "gold",
+                    "value" : 100
+                }
+            ]
+        },
+        {
+            "id" : "IGCH-002",
+            "currency" : [
+                {
+                    "type"  : "gold",
+                    "value" : 100
+                }
+            ]
+        },
+        {
+            "id" : "IGCH-003",
+            "currency" : [
+                {
+                    "type"  : "gems",
+                    "value" : 100
+                }
+            ]
+        },
+        {
+            "id" : "IGCA-001",
+            "currency" : [
+                {
+                    "type"  : "gems",
+                    "value" : 100
+                }
+            ]
+        },
+        {
+            "id" : "IGCA-002",
+            "currency" : [
+                {
+                    "type"  : "gold",
+                    "value" : 100
+                }
+            ]
+        },
+        {
+            "id" : "IGCA-003",
+            "currency" : [
+                {
+                    "type"  : "gold",
+                    "value" : 100
+                }
+            ]
+        }
+    ]
+}

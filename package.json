@@ -1,0 +1,23 @@
+{
+  "name": "inferno_engine",
+  "version": "1.0.0",
+  "description": "This is infernos backend engine",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "forever start app.js",
+    "stop": "forever stopall"
+  },
+  "author": "Aniket Kayande",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "google-auth-library": "^1.6.1",
+    "google-protobuf": "^3.6.1",
+    "mongoose": "^5.2.9",
+    "ws": "^6.0.0"
+  }
+}
