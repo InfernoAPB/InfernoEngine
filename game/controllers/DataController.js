@@ -50,7 +50,6 @@ function getDataObject() {
                 var json = JSON.stringify(propertyObject["value"]);
                 var property = new dataClass.Property();
                 property.setName(propertyObject["name"]);
-                console.log(propertyObject["value"].valueOf());
                 property.setJson(json);
                 cardProto.addProperties(property);
             });
