@@ -8,7 +8,7 @@ async function processRequest(request,responses)
 {
     var startUpRequest = startUpProto.StartUp.deserializeBinary(request.getPayload());
     var requestId = request.getId();
-
+ 
     var response = new requestProto.Response();
     response.setType(SharedEnums.ResponseType.STARTUP_RESPONSE);
     response.setStatus(SharedEnums.ResponseStatus.FAIL);

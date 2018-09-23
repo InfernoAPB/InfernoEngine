@@ -15,8 +15,6 @@ var cert = fs.readFileSync('encryption/server.pem');
 var controllers = require('./controllers/controllers');
 var userModule = require('./models/user');
 var game_server = require('./game/game-server');
-var cache_controller = require('./game/controllers/CacheController');
-
 
 //=========================================
 // APP GLOBALS
@@ -232,7 +230,6 @@ app.get("/somthingwentwrong", function (req, res) {
 
 http.createServer(app).listen(10000, function () {
     console.log("Created HTTP server to listen on Port 10000");
-    cache_controller.refreshCache();
 });
 
 https.createServer(options, app).listen(httpsPort, function () {

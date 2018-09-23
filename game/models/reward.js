@@ -7,7 +7,7 @@ var rewards_collection = {
 }
 var RewardSchema = database.getSchemaObject({
     id:String,
-    rewardId:String,
+    rwid:String,
     type:String,
     count:Number
 },

@@ -4,7 +4,8 @@ var responsesClass = require('../misc/Responses');
 const REQUEST_SIZE = 4;
 var controllers = {
     [requestTypeProto.RequestType.STARTUP]: require('../controllers/LoginPlayerController'),
-    [requestTypeProto.RequestType.CREATE_NEW_USER]: require('../controllers/CreatePlayerController')
+    [requestTypeProto.RequestType.CREATE_NEW_USER]: require('../controllers/CreatePlayerController'),
+    [requestTypeProto.RequestType.LOAD_GAME_DATA]: require('../controllers/DataController')
 };
 
 async function processRequest(request, callback) {

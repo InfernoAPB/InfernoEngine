@@ -2,13 +2,14 @@ const WebSocket = require('ws');
 const wss = new WebSocket.Server({ port: 9000 });
 var eventControllers = require('../game/controllers/EventControllers');
 var cacheController = require('../game/controllers/CacheController');
-
+cacheController.refreshCache();
 
 wss.on('connection', function (session) {
     console.log("Connection Opened " + session);
     session.onmessage = messageHandler;
     session.onclose = function () {
         console.log("session disconnected");
+        
     }
 });
 
@@ -25,3 +26,4 @@ async function messageHandler(message) {
         message.target.send(result);
      }
  }
+
