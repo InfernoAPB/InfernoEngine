@@ -50,8 +50,6 @@ function createResponseBuffer(responses) {
     return buffer;
 }
 
-
-
 module.exports = {
     processRequest
 }

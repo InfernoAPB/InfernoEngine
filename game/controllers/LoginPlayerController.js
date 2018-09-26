@@ -3,6 +3,7 @@ var startUpProto = require('../proto_source/StartUp_pb');
 var requestProto = require('../proto_source/Request_pb');
 var SharedEnums = require('../proto_source/SharedEnums_pb');
 var apiSettings = require('../misc/APISettings');
+var protoUtil = require('../misc/ProtoUtil');
 
 async function processRequest(request,responses)
 {
@@ -53,7 +54,7 @@ async function processRequest(request,responses)
     else if(api_minor > client_minor)
     {
         startUpResponse.setStartupstatus(startUpProto.StartUpResponse.StartupResponseStatus.MINOR_UPDATE);
-        startUpResponse.setMessage("We have few awesome new updates for you. Head over to app store to download the update"); 
+        startUpResponse.setMessage("We have few awesome new updates for you. Head over to app store to download the update");
         isMinor = true;
     }
     else {
@@ -72,7 +73,9 @@ async function processRequest(request,responses)
     if(players != undefined && players.length > 0)
     {
         let player = players[0];
+        let playerProto =  protoUtil.getUserProfileFromPlayerObject(player)
         startUpResponse.setPlayerstatus(startUpProto.StartUpResponse.PlayerStatus.PLAYER_FOUND);
+        startUpResponse.setPlayerprofile(playerProto);
         response.setStatus(SharedEnums.ResponseStatus.SUCCESS);
         response.setPayload(startUpResponse.serializeBinary());
         responses.addGameResponse(response.serializeBinary());
@@ -85,8 +88,6 @@ async function processRequest(request,responses)
         responses.addGameResponse(response.serializeBinary());
     }
     return responses;
-
-   
 }
 
 module.exports = {

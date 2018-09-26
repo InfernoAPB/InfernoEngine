@@ -25,7 +25,6 @@ const client = new OAuth2Client(config.web.client_id);
 //     "locale": "en"
 //    }
 
-
 async function verify(token, callback) {
     var legit = false;
     const ticket = await client.verifyIdToken({

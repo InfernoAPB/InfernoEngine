@@ -12,22 +12,22 @@ var Cache = {
     {
         cardsModel.getAllCards().then((cards) => {
             Cache.cards = cards;
-            console.log("Cards Cache is Refreshed " + (Cache.cards.length));
+            console.log("Cards cache is refreshed " + (Cache.cards.length));
         });
     
         chestsModel.getAllChests().then((chests) => {
             Cache.chests = chests;
-            console.log("Chests Cache is Refreshed" + (Cache.chests.length));
+            console.log("Chests cache is refreshed" + (Cache.chests.length));
         });
     
         rewardsModel.getAllRewards().then((rewards) => {
             Cache.rewards = rewards;
-            console.log("Rewards Cache is Refreshed " + Cache.rewards.length);
+            console.log("Rewards cache is refreshed " + Cache.rewards.length);
         });
     
         gameElementsModel.getAllGameElements().then((gameelements) => {
             Cache.gameelements = gameelements;
-            console.log("GameElements Cache is Refreshed : " + Cache.gameelements.length);
+            console.log("GameElements cache is refreshed : " + Cache.gameelements.length);
         });
     }
 };

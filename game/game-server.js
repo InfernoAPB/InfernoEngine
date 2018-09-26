@@ -9,13 +9,12 @@ wss.on('connection', function (session) {
     session.onmessage = messageHandler;
     session.onclose = function () {
         console.log("session disconnected");
-        
     }
 });
 
 wss.on('error', function (error) {
     if (error) {
-        console.error(error);   
+        console.error(error);
     }
 });
 

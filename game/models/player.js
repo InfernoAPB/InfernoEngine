@@ -24,7 +24,7 @@ var playersBannedCollection = {
 //     },
 //     playersCollection
 // );
-var PlayerSchema =  database.getSchemaObject(
+var PlayerSchema = database.getSchemaObject(
     {
         uid: String,
         name: String,
@@ -32,8 +32,14 @@ var PlayerSchema =  database.getSchemaObject(
         udid: String,
         xp: Number,
         gold: Number,
+        gems:Number,
         last_login: Date,
-        platform: String
+        platform: String,
+        trophies:Number,
+        clan_id:String,
+        items_unlocked:[String],
+        items_in_progress:[{}],
+        slots:[String]
     },
     playersCollection
 );

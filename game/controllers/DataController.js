@@ -64,7 +64,6 @@ function getDataObject() {
             let chestProto = new dataClass.Chest();
             chestProto.setId(chestObject["id"]);
             chestProto.setName(chestObject["name"]);
-
             var rewards = chestObject["rewards"];
 
             rewards.forEach((rewardId)=>
@@ -74,7 +73,6 @@ function getDataObject() {
 
             chestProto.setImage(chestObject["image"]);
             chestProto.setDescription(chestObject["description"]);
-
             dataObject.addChests(chestProto);
         });
 
@@ -86,7 +84,6 @@ function getDataObject() {
             rewardProto.setCount(rwdObject["count"]);
             dataObject.addRewards(rewardProto);
         });
-
 
         cachedDataObject = dataObject;
     }

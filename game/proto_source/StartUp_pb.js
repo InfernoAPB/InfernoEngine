@@ -11,7 +11,7 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
-var SharedEnums_pb = require('./SharedEnums_pb.js');
+var User_pb = require('./User_pb.js');
 goog.exportSymbol('proto.com.inferno.protos.StartUp', null, global);
 goog.exportSymbol('proto.com.inferno.protos.StartUpResponse', null, global);
 goog.exportSymbol('proto.com.inferno.protos.StartUpResponse.PlayerStatus', null, global);
@@ -530,7 +530,8 @@ proto.com.inferno.protos.StartUpResponse.toObject = function(includeInstance, ms
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     startupstatus: jspb.Message.getFieldWithDefault(msg, 2, 0),
     playerstatus: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    message: jspb.Message.getFieldWithDefault(msg, 4, "")
+    message: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    playerprofile: (f = msg.getPlayerprofile()) && User_pb.UserProfile.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -582,6 +583,11 @@ proto.com.inferno.protos.StartUpResponse.deserializeBinaryFromReader = function(
     case 4:
       var value = /** @type {string} */ (reader.readString());
       msg.setMessage(value);
+      break;
+    case 5:
+      var value = new User_pb.UserProfile;
+      reader.readMessage(value,User_pb.UserProfile.deserializeBinaryFromReader);
+      msg.setPlayerprofile(value);
       break;
     default:
       reader.skipField();
@@ -638,6 +644,14 @@ proto.com.inferno.protos.StartUpResponse.serializeBinaryToWriter = function(mess
     writer.writeString(
       4,
       f
+    );
+  }
+  f = message.getPlayerprofile();
+  if (f != null) {
+    writer.writeMessage(
+      5,
+      f,
+      User_pb.UserProfile.serializeBinaryToWriter
     );
   }
 };
@@ -722,6 +736,36 @@ proto.com.inferno.protos.StartUpResponse.prototype.getMessage = function() {
 /** @param {string} value */
 proto.com.inferno.protos.StartUpResponse.prototype.setMessage = function(value) {
   jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional UserProfile playerProfile = 5;
+ * @return {?proto.com.inferno.protos.UserProfile}
+ */
+proto.com.inferno.protos.StartUpResponse.prototype.getPlayerprofile = function() {
+  return /** @type{?proto.com.inferno.protos.UserProfile} */ (
+    jspb.Message.getWrapperField(this, User_pb.UserProfile, 5));
+};
+
+
+/** @param {?proto.com.inferno.protos.UserProfile|undefined} value */
+proto.com.inferno.protos.StartUpResponse.prototype.setPlayerprofile = function(value) {
+  jspb.Message.setWrapperField(this, 5, value);
+};
+
+
+proto.com.inferno.protos.StartUpResponse.prototype.clearPlayerprofile = function() {
+  this.setPlayerprofile(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.com.inferno.protos.StartUpResponse.prototype.hasPlayerprofile = function() {
+  return jspb.Message.getField(this, 5) != null;
 };
 
 

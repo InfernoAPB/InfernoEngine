@@ -732,7 +732,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.com.inferno.protos.UserProfile.repeatedFields_ = [8];
+proto.com.inferno.protos.UserProfile.repeatedFields_ = [5,8,9];
 
 
 
@@ -767,10 +767,12 @@ proto.com.inferno.protos.UserProfile.toObject = function(includeInstance, msg) {
     xp: jspb.Message.getFieldWithDefault(msg, 2, 0),
     gold: jspb.Message.getFieldWithDefault(msg, 3, 0),
     gems: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    slots: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    trophies: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    slotsList: jspb.Message.getRepeatedField(msg, 5),
+    trophies: jspb.Message.getFieldWithDefault(msg, 6, 0),
     clanid: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    itemsunlockedList: jspb.Message.getRepeatedField(msg, 8)
+    itemsunlockedList: jspb.Message.getRepeatedField(msg, 8),
+    itemsinprogressList: jspb.Message.getRepeatedField(msg, 9),
+    platform: jspb.Message.getFieldWithDefault(msg, 10, "")
   };
 
   if (includeInstance) {
@@ -824,11 +826,11 @@ proto.com.inferno.protos.UserProfile.deserializeBinaryFromReader = function(msg,
       msg.setGems(value);
       break;
     case 5:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setSlots(value);
+      var value = /** @type {string} */ (reader.readString());
+      msg.addSlots(value);
       break;
     case 6:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {number} */ (reader.readInt32());
       msg.setTrophies(value);
       break;
     case 7:
@@ -838,6 +840,14 @@ proto.com.inferno.protos.UserProfile.deserializeBinaryFromReader = function(msg,
     case 8:
       var value = /** @type {string} */ (reader.readString());
       msg.addItemsunlocked(value);
+      break;
+    case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addItemsinprogress(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPlatform(value);
       break;
     default:
       reader.skipField();
@@ -896,16 +906,16 @@ proto.com.inferno.protos.UserProfile.serializeBinaryToWriter = function(message,
       f
     );
   }
-  f = message.getSlots();
-  if (f !== 0) {
-    writer.writeInt32(
+  f = message.getSlotsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
       5,
       f
     );
   }
   f = message.getTrophies();
-  if (f.length > 0) {
-    writer.writeString(
+  if (f !== 0) {
+    writer.writeInt32(
       6,
       f
     );
@@ -921,6 +931,20 @@ proto.com.inferno.protos.UserProfile.serializeBinaryToWriter = function(message,
   if (f.length > 0) {
     writer.writeRepeatedString(
       8,
+      f
+    );
+  }
+  f = message.getItemsinprogressList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      9,
+      f
+    );
+  }
+  f = message.getPlatform();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
       f
     );
   }
@@ -988,32 +1012,46 @@ proto.com.inferno.protos.UserProfile.prototype.setGems = function(value) {
 
 
 /**
- * optional int32 slots = 5;
- * @return {number}
+ * repeated string slots = 5;
+ * @return {!Array<string>}
  */
-proto.com.inferno.protos.UserProfile.prototype.getSlots = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+proto.com.inferno.protos.UserProfile.prototype.getSlotsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 5));
 };
 
 
-/** @param {number} value */
-proto.com.inferno.protos.UserProfile.prototype.setSlots = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+/** @param {!Array<string>} value */
+proto.com.inferno.protos.UserProfile.prototype.setSlotsList = function(value) {
+  jspb.Message.setField(this, 5, value || []);
 };
 
 
 /**
- * optional string trophies = 6;
- * @return {string}
+ * @param {!string} value
+ * @param {number=} opt_index
  */
-proto.com.inferno.protos.UserProfile.prototype.getTrophies = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+proto.com.inferno.protos.UserProfile.prototype.addSlots = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 5, value, opt_index);
 };
 
 
-/** @param {string} value */
+proto.com.inferno.protos.UserProfile.prototype.clearSlotsList = function() {
+  this.setSlotsList([]);
+};
+
+
+/**
+ * optional int32 trophies = 6;
+ * @return {number}
+ */
+proto.com.inferno.protos.UserProfile.prototype.getTrophies = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
+};
+
+
+/** @param {number} value */
 proto.com.inferno.protos.UserProfile.prototype.setTrophies = function(value) {
-  jspb.Message.setProto3StringField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -1033,7 +1071,7 @@ proto.com.inferno.protos.UserProfile.prototype.setClanid = function(value) {
 
 
 /**
- * repeated string itemsunlocked = 8;
+ * repeated string itemsUnlocked = 8;
  * @return {!Array<string>}
  */
 proto.com.inferno.protos.UserProfile.prototype.getItemsunlockedList = function() {
@@ -1058,6 +1096,50 @@ proto.com.inferno.protos.UserProfile.prototype.addItemsunlocked = function(value
 
 proto.com.inferno.protos.UserProfile.prototype.clearItemsunlockedList = function() {
   this.setItemsunlockedList([]);
+};
+
+
+/**
+ * repeated string itemsInProgress = 9;
+ * @return {!Array<string>}
+ */
+proto.com.inferno.protos.UserProfile.prototype.getItemsinprogressList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 9));
+};
+
+
+/** @param {!Array<string>} value */
+proto.com.inferno.protos.UserProfile.prototype.setItemsinprogressList = function(value) {
+  jspb.Message.setField(this, 9, value || []);
+};
+
+
+/**
+ * @param {!string} value
+ * @param {number=} opt_index
+ */
+proto.com.inferno.protos.UserProfile.prototype.addItemsinprogress = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 9, value, opt_index);
+};
+
+
+proto.com.inferno.protos.UserProfile.prototype.clearItemsinprogressList = function() {
+  this.setItemsinprogressList([]);
+};
+
+
+/**
+ * optional string platform = 10;
+ * @return {string}
+ */
+proto.com.inferno.protos.UserProfile.prototype.getPlatform = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/** @param {string} value */
+proto.com.inferno.protos.UserProfile.prototype.setPlatform = function(value) {
+  jspb.Message.setProto3StringField(this, 10, value);
 };
 
 
