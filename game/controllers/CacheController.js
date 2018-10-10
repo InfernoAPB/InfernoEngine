@@ -8,27 +8,50 @@ var Cache = {
     chests : [],
     rewards : [],
     gameelements : [],
-    refreshCache : () =>
+
+    cardsDict : {},
+    chestsDict : {},
+    rewardsDict : {},
+    gameelementsDict : {},
+    refreshCache :async function()
     {
-        cardsModel.getAllCards().then((cards) => {
-            Cache.cards = cards;
-            console.log("Cards cache is refreshed " + (Cache.cards.length));
+        Cache.cards = await cardsModel.getAllCards();
+        Cache.cards.forEach(element => {
+            Cache.cardsDict[element["id"]] = element;
         });
-    
-        chestsModel.getAllChests().then((chests) => {
-            Cache.chests = chests;
-            console.log("Chests cache is refreshed" + (Cache.chests.length));
+        console.log("Cards cache is refreshed " + (Cache.cards.length));
+
+        Cache.chests = await chestsModel.getAllChests();
+        Cache.chests.forEach(element => {
+            Cache.chestsDict[element["id"]] = element;
         });
-    
-        rewardsModel.getAllRewards().then((rewards) => {
-            Cache.rewards = rewards;
-            console.log("Rewards cache is refreshed " + Cache.rewards.length);
+        console.log("Chests cache is refreshed" + (Cache.chests.length));
+
+        Cache.rewards = await rewardsModel.getAllRewards();
+
+        Cache.rewards.forEach(element => {
+            Cache.rewardsDict[element["id"]] = element;
         });
-    
-        gameElementsModel.getAllGameElements().then((gameelements) => {
-            Cache.gameelements = gameelements;
-            console.log("GameElements cache is refreshed : " + Cache.gameelements.length);
+        console.log("Rewards cache is refreshed " + Cache.rewards.length);
+
+
+        Cache.gameelements = await gameElementsModel.getAllGameElements();
+        Cache.gameelements.forEach(element => {
+            Cache.gameelementsDict[element["id"]] = element;
         });
+        console.log("GameElements cache is refreshed : " + Cache.gameelements.length);
+    },
+    getChestById : function(chestId)
+    {
+        return Cache.chestsDict[chestId];
+    },
+    getRewardForId: function(rewardId)
+    {
+        return Cache.rewards[rewardId];
+    },
+    getRewardByRewardId(rewardId)
+    {
+        return Cache.rewards.find(element => element["rwid"] === rewardId);
     }
 };
 

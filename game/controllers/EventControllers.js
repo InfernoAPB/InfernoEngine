@@ -5,7 +5,8 @@ const REQUEST_SIZE = 4;
 var controllers = {
     [requestTypeProto.RequestType.STARTUP]: require('../controllers/LoginPlayerController'),
     [requestTypeProto.RequestType.CREATE_NEW_USER]: require('../controllers/CreatePlayerController'),
-    [requestTypeProto.RequestType.LOAD_GAME_DATA]: require('../controllers/DataController')
+    [requestTypeProto.RequestType.LOAD_GAME_DATA]: require('../controllers/DataController'),
+    [requestTypeProto.RequestType.REWARD_USER]: require('../controllers/RewardUserController'),
 };
 
 async function processRequest(request, callback) {

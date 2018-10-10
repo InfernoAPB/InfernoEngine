@@ -1,0 +1,58 @@
+{
+    "rewards": [
+        {
+            "id": "IGRW-001",
+            "rwid": "IGCA-001",
+            "type": "card",
+            "count": 1
+        },
+        {
+            "id": "IGRW-002",
+            "rwid": "IGCA-002",
+            "type": "card",
+            "count": 1
+        },
+        {
+            "id": "IGRW-003",
+            "rwid": "IGRW-002",
+            "type": "reward",
+            "count": 10
+        },
+        {
+            "id": "IGRW-004",
+            "rwid": "IGCH-001",
+            "type": "chest",
+            "count": 1
+        },
+        {
+            "id": "IGRW-005",
+            "rwid": "IGCH-002",
+            "type": "chest",
+            "count": 1
+        },
+        {
+            "id": "IGRW-006",
+            "rwid": "IGCH-003",
+            "type": "chest",
+            "count": 1
+        },
+        {
+            "id": "IGRW-007",
+            "rwid": "IGCH-004",
+            "type": "chest",
+            "count": 1
+        },
+        {
+            "id": "IGRW-008",
+            "rwid": "IGCH-005",
+            "type": "chest",
+            "count": 1
+        },
+        {
+            "id": "IGRW-009",
+            "rwid": "cus",
+            "type": "gold",
+            "count": 1
+        }
+    ]
+}

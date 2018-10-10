@@ -2,6 +2,7 @@
     "gameelements":[
         {
             "id" : "IGCH-001",
+            "description" : "chest",
             "currency" : [
                 {
                     "type"  : "gold",
@@ -11,46 +12,41 @@
         },
         {
             "id" : "IGCH-002",
+            "description" : "chest",
             "currency" : [
                 {
                     "type"  : "gold",
-                    "value" : 100
+                    "value" : 1000
                 }
             ]
         },
         {
             "id" : "IGCH-003",
+            "description" : "chest",
             "currency" : [
                 {
-                    "type"  : "gems",
+                    "type"  : "gem",
                     "value" : 100
                 }
             ]
         },
         {
-            "id" : "IGCA-001",
+            "id" : "IGCH-004",
+            "description" : "chest",
             "currency" : [
                 {
-                    "type"  : "gems",
-                    "value" : 100
+                    "type"  : "gem",
+                    "value" : 200
                 }
             ]
         },
         {
-            "id" : "IGCA-002",
+            "id" : "IGCH-005",
+            "description" : "chest",
             "currency" : [
                 {
-                    "type"  : "gold",
-                    "value" : 100
-                }
-            ]
-        },
-        {
-            "id" : "IGCA-003",
-            "currency" : [
-                {
-                    "type"  : "gold",
-                    "value" : 100
+                    "type"  : "gem",
+                    "value" : 400
                 }
             ]
         }

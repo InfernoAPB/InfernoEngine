@@ -24,6 +24,7 @@ var playersBannedCollection = {
 //     },
 //     playersCollection
 // );
+
 var PlayerSchema = database.getSchemaObject(
     {
         uid: String,
@@ -72,10 +73,27 @@ async function findPlayer(keys) {
 async function createPlayer(values) {
     console.log("Player.CreatePlayer");
     try {
+
         let record = await database.insertRecord(values, PlayerModel)
             .catch(
                 function (reason) {
                     console.log("Promise is rejected : createPlayer ::" + reason)
+                });
+        return record;
+    }
+    catch (error) {
+        throw (error);
+    }
+}
+
+async function updatePlayer(conditions,updates)
+{
+    console.log("Player.UpdatePlayer");
+    try {
+        let record = await database.updateRecord(conditions,updates,PlayerModel)
+            .catch(
+                function (reason) {
+                    console.log("Promise is rejected : updatePlayer ::" + reason)
                 });
         return record;
     }
@@ -98,14 +116,13 @@ async function findBannedPlayer(keys)
 }
 
 
-
-
 module.exports = {
     PlayerSchema,
     playersCollection,
     PlayerModel,
     findPlayer,
-    createPlayer
+    createPlayer,
+    updatePlayer
 };
 
 

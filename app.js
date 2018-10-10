@@ -66,10 +66,10 @@ app.set('view engine', 'ejs');
 
 var sess;
 var httpsPort = 8443;
+
 //=========================================
 // ROUTES
 //=========================================
-
 app.get("/", function (req, res) {
     console.log(req);
     sess = req.session;

@@ -1,6 +1,11 @@
 
 var Util = {
-    userProto : null,
+    user : require('../proto_source/User_pb'),
+    gameEvents:require('../proto_source/GameEvents_pb'),
+    data:require('../proto_source/Data_pb'),
+    requestProto:require('../proto_source/Request_pb'),
+    sharedEnums:require('../proto_source/SharedEnums_pb'),
+
     getUserProfileFromPlayerObject : function(playerObject)
     {
         // {
@@ -19,7 +24,7 @@ var Util = {
         //     items_in_progress:[JSON],
         //      slots:[String]
         // },
-        let userProfile =  new Util.userProto.UserProfile();
+        let userProfile =  new Util.user.UserProfile();
         userProfile.setUsername(playerObject["name"]);
         userProfile.setXp(playerObject["xp"]);
         userProfile.setGold(playerObject["gold"]);
@@ -27,6 +32,8 @@ var Util = {
         userProfile.setTrophies(playerObject["trophies"]);
         userProfile.setClanid(playerObject["clan_id"]);
         userProfile.setPlatform(playerObject["platform"]);
+        userProfile.setUserId(playerObject["uid"]);
+
         var slots = playerObject["slots"];
         slots.forEach(element => {
             userProfile.addSlots(element);
@@ -46,12 +53,21 @@ var Util = {
 
         return userProfile;
     },
-
-    init:function()
+    getRewardFromRewardRecord:function(record)
     {
-        Util.userProto = require('../proto_source/User_pb');
+        // id:String,
+        // rwid:String,
+        // type:String,
+        // count:Number
+        let reward =  new Util.data.Reward();
+        
+        reward.setId(record["id"]);
+        reward.setRewardid(record["rwid"]);
+        reward.setType(record["type"]);
+        reward.setCount(record["count"]);
+        
+        return reward;
     }
+    
 }
-Util.init();
-
 module.exports = Util;

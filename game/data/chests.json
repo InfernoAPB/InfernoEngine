@@ -1,0 +1,65 @@
+{
+    "chests":[
+        {
+            "id" : "IGCH-001",
+            "type": "silver",
+            "unlock_duration": 60,
+            "rewards": [
+                "IGRW-001",
+                "IGRW-002",
+                "IGRW-003"
+            ],
+            "image": "silver",
+            "description" : "This is a silver chest" 
+        },
+        {
+            "id" : "IGCH-002",
+            "type": "golden",
+            "unlock_duration": 120,
+            "rewards": [
+                "IGRW-001",
+                "IGRW-002",
+                "IGRW-003"
+            ],
+            "image": "golden",
+            "description" : "This is a golden chest"
+        },
+        {
+            "id" : "IGCH-003",
+            "type": "legendary",
+            "unlock_duration": 180,
+            "rewards": [
+                "IGRW-001",
+                "IGRW-002",
+                "IGRW-003"
+            ],
+            "image": "legendary",
+            "description" : "This is a legendary chest" 
+        },
+        {
+            "id" : "IGCH-004",
+            "type": "crown",
+            "unlock_duration": 180,
+            "rewards": [
+                "IGRW-001",
+                "IGRW-002",
+                "IGRW-003"
+            ],
+            "image": "crown",
+            "description" : "This is a crown chest"
+        },
+        {
+            "id" : "IGCH-005",
+            "type": "clan",
+            "unlock_duration": 180,
+            "rewards": [
+                "IGRW-001",
+                "IGRW-002",
+                "IGRW-003"
+            ],
+            "image": "clan",
+            "description" : "This is a quest chest"
+        }
+    ]
+    
+}
